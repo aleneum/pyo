@@ -502,6 +502,7 @@ extern PyTypeObject RawMidiType;
 extern PyTypeObject ResampleType;
 extern PyTypeObject ExprType;
 extern PyTypeObject PadSynthTableType;
+extern PyTypeObject FIFOPlayerType;
 
 /* Constants */
 #define E M_E

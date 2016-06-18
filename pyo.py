@@ -65,6 +65,7 @@ from pyolib.phasevoc import *
 from pyolib._core import *
 from pyolib.wxgui import *
 import pyolib.wxgui as wxgui
+from pyolib.fifoplayer import FIFOPlayer
 if WITH_EXTERNALS:
     import pyolib.external as external
     from pyolib.external import *
@@ -108,7 +109,7 @@ OBJECTS_TREE = {'functions': sorted(['pa_count_devices', 'pa_get_default_input',
                                   'pan': sorted(['Pan', 'SPan', 'Switch', 'Selector', 'Mixer', 'VoiceManager']),
                                   'pattern': sorted(['Pattern', 'Score', 'CallAfter']),
                                   'randoms': sorted(['Randi', 'Randh', 'Choice', 'RandInt', 'Xnoise', 'XnoiseMidi', 'RandDur', 'XnoiseDur', 'Urn']),
-                                  'players': sorted(['SfMarkerShuffler', 'SfPlayer', 'SfMarkerLooper']),
+                                  'players': sorted(['SfMarkerShuffler', 'SfPlayer', 'SfMarkerLooper', 'FIFOPlayer']),
                                   'tableprocess': sorted(['TableRec', 'Osc', 'Pointer', 'Pointer2', 'Lookup', 'Granulator', 'Pulsar', 'OscLoop',
                                                           'Granule', 'TableRead', 'TableMorph', 'Looper', 'TableIndex', 'OscBank', 'OscTrig',
                                                           'TablePut', 'TableScale', 'Particle', 'TableWrite']),

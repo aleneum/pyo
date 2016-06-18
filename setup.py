@@ -32,25 +32,25 @@ main_modules = ['pyo']
 extra_macros_per_extension = [[]]
 
 if '--use-double' in sys.argv:
-    sys.argv.remove('--use-double') 
-    if not '--only-double' in sys.argv: 
+    sys.argv.remove('--use-double')
+    if not '--only-double' in sys.argv:
         extension_names.append('_pyo64')
         main_modules.append('pyo64')
         extra_macros_per_extension.append([('USE_DOUBLE',None)])
 
 if '--only-double' in sys.argv:
-    sys.argv.remove('--only-double') 
+    sys.argv.remove('--only-double')
     extension_names = ['_pyo64']
     main_modules = ['pyo64']
     extra_macros_per_extension = [[('USE_DOUBLE',None)]]
 
-if '--no-messages' in sys.argv:    
-    sys.argv.remove('--no-messages') 
+if '--no-messages' in sys.argv:
+    sys.argv.remove('--no-messages')
     macros.append(('NO_MESSAGES',None))
 
 if '--compile-externals' in sys.argv:
     compile_externals = True
-    sys.argv.remove('--compile-externals') 
+    sys.argv.remove('--compile-externals')
     macros.append(('COMPILE_EXTERNALS',None))
 
 if '--fast-compile' in sys.argv:
@@ -65,7 +65,7 @@ obj_files = []
 
 # Special flag to build without portaudio, portmidi and liblo deps.
 if '--minimal' in sys.argv:
-    sys.argv.remove('--minimal') 
+    sys.argv.remove('--minimal')
     libraries = []
 else:
     # portaudio
@@ -84,14 +84,14 @@ else:
     libraries += ["lo"]
 
 # Optional Audio / Midi drivers
-if '--use-jack' in sys.argv: 
-    sys.argv.remove('--use-jack') 
+if '--use-jack' in sys.argv:
+    sys.argv.remove('--use-jack')
     build_with_jack_support = True
     macros.append(('USE_JACK',None))
     ad_files.append("ad_jack.c")
 
-if '--use-coreaudio' in sys.argv: 
-    sys.argv.remove('--use-coreaudio') 
+if '--use-coreaudio' in sys.argv:
+    sys.argv.remove('--use-coreaudio')
     macros.append(('USE_COREAUDIO',None))
     ad_files.append("ad_coreaudio.c")
 
@@ -99,22 +99,22 @@ if sys.platform == "darwin":
     macros.append(('_OSX_', None))
 
 path = 'src/engine'
-files = ['pyomodule.c', 'streammodule.c', 'servermodule.c', 'pvstreammodule.c', 
-         'dummymodule.c', 'mixmodule.c', 'inputfadermodule.c', 'interpolation.c', 
+files = ['pyomodule.c', 'streammodule.c', 'servermodule.c', 'pvstreammodule.c',
+         'dummymodule.c', 'mixmodule.c', 'inputfadermodule.c', 'interpolation.c',
          'fft.c', "wind.c"] + ad_files
 source_files = [os.path.join(path, f) for f in files]
 
 path = 'src/objects'
-files = ['filtremodule.c', 'arithmeticmodule.c', 'oscilmodule.c', 
-         'randommodule.c', 'analysismodule.c', 'sfplayermodule.c', 
-         'oscbankmodule.c', 'lfomodule.c', 'exprmodule.c', 'utilsmodule.c', 
-         'granulatormodule.c', 'matrixmodule.c', 'noisemodule.c', 'distomodule.c', 
-         'tablemodule.c', 'wgverbmodule.c', 'inputmodule.c', 'fadermodule.c', 
-         'midimodule.c', 'delaymodule.c','recordmodule.c', 'metromodule.c', 
-         'trigmodule.c', 'patternmodule.c', 'bandsplitmodule.c', 'hilbertmodule.c', 
-         'panmodule.c', 'selectmodule.c', 'compressmodule.c',  'freeverbmodule.c', 
+files = ['filtremodule.c', 'arithmeticmodule.c', 'oscilmodule.c',
+         'randommodule.c', 'analysismodule.c', 'sfplayermodule.c',
+         'oscbankmodule.c', 'lfomodule.c', 'exprmodule.c', 'utilsmodule.c',
+         'granulatormodule.c', 'matrixmodule.c', 'noisemodule.c', 'distomodule.c',
+         'tablemodule.c', 'wgverbmodule.c', 'inputmodule.c', 'fadermodule.c',
+         'midimodule.c', 'delaymodule.c','recordmodule.c', 'metromodule.c',
+         'trigmodule.c', 'patternmodule.c', 'bandsplitmodule.c', 'hilbertmodule.c',
+         'panmodule.c', 'selectmodule.c', 'compressmodule.c',  'freeverbmodule.c',
          'phasevocmodule.c', 'fftmodule.c', 'convolvemodule.c', 'sigmodule.c',
-         'matrixprocessmodule.c', 'harmonizermodule.c', 'chorusmodule.c'] + obj_files
+         'matrixprocessmodule.c', 'harmonizermodule.c', 'chorusmodule.c', 'fifoplayer.c'] + obj_files
 
 if compile_externals:
     source_files = source_files + \
@@ -123,12 +123,12 @@ if compile_externals:
 else:
     source_files = source_files + [os.path.join(path, f) for f in files]
 
-# Platform-specific build settings for the pyo extension(s).  
+# Platform-specific build settings for the pyo extension(s).
 if sys.platform == "win32":
     include_dirs = ['C:\portaudio\include', 'C:\portmidi\pm_common', 'include',
                     'C:\Program Files (x86)\Mega-Nerd\libsndfile\include',
                     'C:\liblo', 'C:\pthreads\include', 'C:\portmidi\porttime']
-    library_dirs = ['C:\portaudio', 'C:\portmidi', 'C:\liblo', 'C:\pthreads\lib', 
+    library_dirs = ['C:\portaudio', 'C:\portmidi', 'C:\liblo', 'C:\pthreads\lib',
                     'C:/Program Files (x86)/Mega-Nerd/libsndfile/bin']
     libraries += ['libsndfile-1', 'pthreadVC2']
     if 'portmidi' in libraries:
@@ -146,8 +146,8 @@ extra_compile_args = ['-Wno-strict-prototypes', '-Wno-strict-aliasing', oflag]
 
 extensions = []
 for extension_name, extra_macros in zip(extension_names, extra_macros_per_extension):
-    extensions.append(Extension(extension_name, source_files, libraries=libraries, 
-                                library_dirs=library_dirs, include_dirs=include_dirs, 
+    extensions.append(Extension(extension_name, source_files, libraries=libraries,
+                                library_dirs=library_dirs, include_dirs=include_dirs,
                                 extra_compile_args=extra_compile_args,
                                 define_macros=macros + extra_macros))
 
