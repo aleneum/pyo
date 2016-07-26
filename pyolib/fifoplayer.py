@@ -95,4 +95,4 @@ class FIFOPlayer(PyoObject):
             bo._queue = Queue.Queue(maxsize=maxsize)
 
     def put(self, x, stream=0,  block=True, timeout=None):
-        self._base_objs[stream].put(x, block, timeout)
+        self._base_objs[stream].put(x)
