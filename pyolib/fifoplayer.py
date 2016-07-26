@@ -92,9 +92,7 @@ class FIFOPlayer(PyoObject):
         self._base_objs = [FIFOPlayer_base(wrap(mul,i), wrap(add,i), wrap(always_memcpy,i)) for i in range(lmax)]
         for bo in self._base_objs:
             # One queue for each channel
-            bo._queue = Queue.Queue(maxsize=maxsize, block=block, timeout=timeout)
+            bo._queue = Queue.Queue(maxsize=maxsize)
 
     def put(self, x, stream=0,  block=True, timeout=None):
         self._base_objs[stream].put(x, block, timeout)
-
-
