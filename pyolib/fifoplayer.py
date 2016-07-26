@@ -1,6 +1,6 @@
 from pyolib._core import *
-from pyolib._maps import *
 import Queue
+
 
 class FIFOPlayer(PyoObject):
     # Objects generating vectors of samples must inherit from PyoObject.
@@ -92,7 +92,9 @@ class FIFOPlayer(PyoObject):
         self._base_objs = [FIFOPlayer_base(wrap(mul,i), wrap(add,i), wrap(always_memcpy,i)) for i in range(lmax)]
         for bo in self._base_objs:
             # One queue for each channel
-            bo._queue = Queue.Queue(maxsize=maxsize)
+            bo._queue = Queue.Queue(maxsize=maxsize, block=block, timeout=timeout)
 
-    def put(self, x, stream=0):
-        self._base_objs[stream].put(x)
+    def put(self, x, stream=0,  block=True, timeout=None):
+        self._base_objs[stream].put(x, block, timeout)
+
+

@@ -18,9 +18,9 @@ GNU Lesser General Public License for more details.
 You should have received a copy of the GNU Lesser General Public
 License along with pyo.  If not, see <http://www.gnu.org/licenses/>.
 """
-
+from distutils.sysconfig import get_python_lib
 from distutils.core import setup, Extension
-import os, sys
+import os, sys, py_compile
 
 pyo_version = "0.8.0"
 build_with_jack_support = False
@@ -53,6 +53,12 @@ if '--compile-externals' in sys.argv:
     sys.argv.remove('--compile-externals')
     macros.append(('COMPILE_EXTERNALS',None))
 
+if '--debug' in sys.argv:
+    sys.argv.remove('--debug')
+    gflag = ""
+else:
+    gflag = "-g0"
+
 if '--fast-compile' in sys.argv:
     sys.argv.remove('--fast-compile')
     oflag = "-O0"
@@ -68,6 +74,7 @@ if '--minimal' in sys.argv:
     sys.argv.remove('--minimal')
     libraries = []
 else:
+    minimal_build = False
     # portaudio
     macros.append(('USE_PORTAUDIO', None))
     ad_files.append("ad_portaudio.c")
@@ -142,7 +149,7 @@ else:
     if build_with_jack_support:
         libraries.append('jack')
 
-extra_compile_args = ['-Wno-strict-prototypes', '-Wno-strict-aliasing', oflag]
+extra_compile_args = ['-Wno-strict-prototypes', '-Wno-strict-aliasing', oflag, gflag]
 
 extensions = []
 for extension_name, extra_macros in zip(extension_names, extra_macros_per_extension):
@@ -168,7 +175,7 @@ setup(  name = "pyo",
         packages = ['pyolib', 'pyolib.snds'],
         py_modules = main_modules,
         package_data = {'pyolib.snds': soundfiles},
-        ext_modules = extensions )
+        ext_modules = extensions)
 
 if compile_externals:
     os.system('rm pyolib/external.py')
